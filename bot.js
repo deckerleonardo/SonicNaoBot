@@ -14,16 +14,18 @@ const T = new Twit({
 
 console.log('Este bot está rodando...');
 
-/* BotInit() : Para iniciar o bot */
+/* Iniciar o bot */
 function BotInit() {
 	var query = {
 		q: "#nummedirigeapalavra",
 		result_type: "recent"
   }
 
+  /* Executando a procura */
   T.get('search/tweets', query, BotGotLatestTweet);
   console.log('CHEGOOOOOOOOOUUUUU')
 
+  /* Função para buscar tweets mais recentes pela query fornecida */
 	function BotGotLatestTweet (error, data, response) {
 		if (error) {
 			console.log('Bot não pôde achar o último tweet, : ' + error);
@@ -34,11 +36,11 @@ function BotInit() {
 
         var userHandle = data.statuses[i].user.screen_name;
       
-
+        /* Resposta padrão do bot */
         var textToReply = "Num me dirige a palavra nao. Faz favor.";
         textToReply = "Ow, @" + userHandle + ". " + textToReply;
  
-
+        /* Executando a resposta */
         T.post( 'statuses/update', {status: textToReply, in_reply_to_status_id: data.statuses[i].id_str}, function( err, data, response ){
         console.log( data );
         });   
